@@ -4,11 +4,10 @@
  * @param {HTMLElement} form
  * @constructor
  */
-var ToDoList = function(ul, form) {
-  
-  "use strict";
+const ToDoList = function(ul, form) {
+  'use strict';
 
-  var _this = this;
+  const _this = this;
 
   /**
    * @desc Form used to create new to-dos
@@ -26,19 +25,19 @@ var ToDoList = function(ul, form) {
 
   this.form.onsubmit = function(e) {
     e.preventDefault();
-    var task = this.task.value;
-    var date = this.due_date.value || new Date();
-    var numOfTodos = _this.todos.length;
-    var todo = new ToDo(task, date, numOfTodos + 1);
+    const task = this.task.value;
+    const date = this.due_date.value || new Date();
+    const numOfTodos = _this.todos.length;
+    const todo = new ToDo(task, date, numOfTodos + 1);
     _this.addToLocalStore(todo);
     _this.addTodo(todo);
   };
 
   this.addEvents = function() {
-    var inputs = document.getElementsByTagName('input');
-    var labels = document.getElementsByTagName('a');
-    var inputsArray = Array.prototype.slice.call(inputs);
-    var labelsArray = Array.prototype.slice.call(labels);
+    const inputs = document.getElementsByTagName('input');
+    const labels = document.getElementsByTagName('a');
+    const inputsArray = Array.prototype.slice.call(inputs);
+    const labelsArray = Array.prototype.slice.call(labels); // eslint-disable-line
 
     inputsArray.forEach(function(input) {
       if (input.type === 'checkbox') {
@@ -58,7 +57,7 @@ var ToDoList = function(ul, form) {
 
   this.addToLocalStore = function(todo) {
     if (todo.id && todo.task) {
-      var tasks;
+      let tasks;
       if (localStorage.tasks) {
         tasks = JSON.parse(localStorage.tasks);
         tasks.push(todo);
@@ -71,26 +70,22 @@ var ToDoList = function(ul, form) {
   };
 
   /**
-   * @param {string} task
-   * @param {date} date
+   * @param {string} todo
    * @desc Add to-do item to list of to-dos
    */
-  this.addTodo = function (todo) {
+  this.addTodo = function(todo) {
     if (todo.task.length > 1) {
       _this.todos.push(todo);
       if (todo.template) {
         _this.list.innerHTML += todo.template();
       } else {
-        var newToDo = _this.loadLocalTodo(todo);
+        const newToDo = _this.loadLocalTodo(todo);
         _this.list.innerHTML += newToDo.template();
       }
       this.addEvents();
     }
   };
 
-  /**
-   * @param {number} id - Id of to-do item
-   */
   this.removeTodo = function(e) {
     if (e.target.dataset.todo) {
 
@@ -108,6 +103,6 @@ var ToDoList = function(ul, form) {
       e.target.parentElement.classList.remove('finished');
     }
   };
-
-
 };
+
+window.ToDoList = ToDoList;

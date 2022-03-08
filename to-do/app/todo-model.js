@@ -1,12 +1,12 @@
 /**
+ * @constructor
  * @desc Constructs new To-Do item
  * @param {string} task
  * @param {date} date
- * @constructor
+ * @param {date} id - ID of To Do item
  */
-var ToDo = function(task, date, id) {
-
-  "use strict";
+const ToDo = function(task, date, id) {
+  'use strict';
 
   /**
    * @cfg {string} task
@@ -30,15 +30,15 @@ var ToDo = function(task, date, id) {
   this.completed = false;
 
   this.createCheckBox = function() {
-    var checkbox = document.createElement('input');
-    checkbox.type = "checkbox";
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
     checkbox.onclick = this.complete;
     checkbox.onchange = this.complete;
     return checkbox;
   };
 
   this.createDelete = function() {
-    var deleteLabel = document.createElement('button');
+    const deleteLabel = document.createElement('button');
     deleteLabel.href = '#';
     deleteLabel.innerHTML = 'Delete!';
     deleteLabel.dataset.todo = this.id;
@@ -50,10 +50,10 @@ var ToDo = function(task, date, id) {
    * @return {String} HTML template of task
    */
   this.template = function() {
-    var li = document.createElement('li');
-    var label = document.createElement('label');
-    var checkbox = this.createCheckBox();
-    var deleteLabel = this.createDelete();
+    const li = document.createElement('li');
+    const label = document.createElement('label');
+    const checkbox = this.createCheckBox();
+    const deleteLabel = this.createDelete();
 
     label.for = checkbox.id = (this.id || 0);
     label.innerHTML = checkbox.outerHTML + this.task + deleteLabel.outerHTML;
@@ -64,5 +64,6 @@ var ToDo = function(task, date, id) {
 
     return li.outerHTML;
   };
-
 };
+
+window.ToDo = ToDo;
